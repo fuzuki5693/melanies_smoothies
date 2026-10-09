@@ -47,20 +47,23 @@ if ingredients_list:
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '
         
-        # --- APIの代わりにダミーデータを設定（forループ内で実行） ---
+        # ① フルーツ名付きの見出しを表示（例: Tangerine Nutrition Information）
+        st.subheader(fruit_chosen + ' Nutrition Information')
+        
+        # ② ダミーデータの「name」部分を選択されたフルーツ名に動的変更
         dummy_data = {
-            "family": "Cucurbitaceae",
-            "genus": "Citrullus",
-            "id": 25,
-            "name": "Watermelon",
+            "family": "Rutaceae",
+            "genus": "Citrus",
+            "id": 20,
+            "name": fruit_chosen,  # 選択されたフルーツ名が入る
             "nutrition": {
-                "carbs": 7.55,
-                "fat": 0.15,
-                "protein": 0.61,
-                "sugar": 6.2
+                "carbs": 13.3,
+                "fat": 0.31,
+                "protein": 0.81,
+                "sugar": 10.5
             },
-            "order": "Cucurbitales"
+            "order": "Rosales"
         }
         
-        # 選択されたフルーツごとにデータフレームを表示
+        # ③ データフレームを表示
         sf_df = st.dataframe(data=dummy_data, use_container_width=True)
