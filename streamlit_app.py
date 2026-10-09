@@ -1,6 +1,7 @@
 # Import python packages
 import streamlit as st
 from snowflake.snowpark.functions import col
+import requests
 
 # Write directly to the app
 st.title(":cup_with_straw: Customize Your Smoothie! :cup_with_straw:")
@@ -40,23 +41,26 @@ if ingredients_list:
         st.success(f'Your Smoothie is ordered, {name_on_order}!', icon="✅")
 
 
-# New section to display smoothiefroot nutrition information
-import requests
+if ingredients_list:
+    ingredients_string = ''
 
-# APIがダウンしている間のハードコード用ダミーデータ
-dummy_data = {
-    "family": "Cucurbitaceae",
-    "genus": "Citrullus",
-    "id": 25,
-    "name": "Watermelon",
-    "nutrition": {
-        "carbs": 7.55,
-        "fat": 0.15,
-        "protein": 0.61,
-        "sugar": 6.2
-    },
-    "order": "Cucurbitales"
-}
-
-# ダミーデータを直接データフレームとして表示
-sf_df = st.dataframe(data=dummy_data, use_container_width=True)
+    for fruit_chosen in ingredients_list:
+        ingredients_string += fruit_chosen + ' '
+        
+        # --- APIの代わりにダミーデータを設定（forループ内で実行） ---
+        dummy_data = {
+            "family": "Cucurbitaceae",
+            "genus": "Citrullus",
+            "id": 25,
+            "name": "Watermelon",
+            "nutrition": {
+                "carbs": 7.55,
+                "fat": 0.15,
+                "protein": 0.61,
+                "sugar": 6.2
+            },
+            "order": "Cucurbitales"
+        }
+        
+        # 選択されたフルーツごとにデータフレームを表示
+        sf_df = st.dataframe(data=dummy_data, use_container_width=True)
